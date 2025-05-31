@@ -18,3 +18,8 @@ func interact() -> void:
 				emit_signal("open_trash_bin")
 			else:
 				dialogue_sub.trash_bin_dial("not_finished")
+		3:
+			if PlayerConditionals.map3_finished:
+				emit_signal("open_trash_bin")
+			else:
+				dialogue_sub.trash_bin_dial("not_finished")

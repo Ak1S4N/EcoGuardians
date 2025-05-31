@@ -45,4 +45,4 @@ func game_won() -> void:
 	var tb_tween = trash_boss.create_tween()
 	tb_tween.tween_property(trash_boss, 'modulate', Color(1,1,1,0), 1)
 	await tb_tween.finished
-	Transitions.fade_into("res://source/UI/main_menu/main_menu.tscn")
+	Transitions.fade_into("res://source/maps/map3/map_3.tscn")

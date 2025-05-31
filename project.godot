@@ -39,6 +39,8 @@ actors=""
 enemy="enemies for minigame"
 fighter=""
 trashes=""
+trash_body_trashes=""
+trashbody=""
 
 [input]
 

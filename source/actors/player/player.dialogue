@@ -32,3 +32,16 @@ set Cutscenes.mg2_cut_1()
 {{PlayerConditionals.player_name}}: Let's start planting with this!
 do PlayerConditionals.is_dialogue = false
 => END
+
+~ start_3
+{{PlayerConditionals.player_name}}: Oh! This lake is full of big body of trashes!
+{{PlayerConditionals.player_name}}: How do I clean that with only my "HAND" and my "TRASH BAG" ..?
+- What's that on the floor...?
+{{PlayerConditionals.player_name}}: Oh my! TRASH BAG CLEANER VERSION 3000!!
+set Cutscenes.mg3_cut_1()
+=> END
+
+~ start_3_2
+{{PlayerConditionals.player_name}}: Time to finish what I've started!
+do PlayerConditionals.is_dialogue = false
+=> END

@@ -10,4 +10,6 @@ func _process(delta: float) -> void:
 			label.text = str(PlayerConditionals.map1_score) + " / 5"
 		2:
 			label.text = str(PlayerConditionals.map2_score) + " / 5"
+		3:
+			label.text = str(PlayerConditionals.map3_score) + " / 5"
 	

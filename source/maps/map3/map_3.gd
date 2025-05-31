@@ -4,7 +4,12 @@ class_name Map3
 @onready var actors = get_tree().get_nodes_in_group("actors")
 
 @onready var pause_menu: PausedMenu = $CanvasLayer/pause_menu
+
+@onready var trash_body_skillcheck: Control = $CanvasLayer/TrashBodySkillcheck
 @onready var cutscene_manager: AnimationPlayer = $CutsceneManager
+
+@onready var quest_banner: QuestBanner = $CanvasLayer/QuestBanner
+@onready var minimap_ui: MinimapUI = $MinimapUI
 
 @onready var mis_1: Node2D = $mis_list/mis1
 @onready var mis_2: Node2D = $mis_list/mis2
@@ -17,11 +22,15 @@ class_name Map3
 var current_qm: Dictionary = Quests.map_3
 
 func _ready() -> void:
-	#dialogue_sub.player_dial('start_2')
+	dialogue_sub.player_dial('start_3')
 	Quests.open_mission_3.connect(open_mission)
-	#Cutscenes.mg2_cutscene_1.connect(cutscene_manager.cutscene_1)
+	Cutscenes.mg3_cutscene_1.connect(cutscene_manager.cutscene_1)
 	#Cutscenes.mg2_cutscene_2.connect(cutscene_manager.cutscene_2)
 	PlayerConditionals.movement_tut_done = true
+	
+	for i in get_tree().get_nodes_in_group("trashbody"):
+		if i.has_signal("open_tb_skillcheck"):
+			i.open_tb_skillcheck.connect(start_skillcheck)
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("open_settings"):
@@ -34,6 +43,10 @@ func _process(delta: float) -> void:
 			actor.set_physics_process(false)
 		else:
 			actor.set_physics_process(true)
+	
+	if PlayerConditionals.map3_finished == false\
+	and PlayerConditionals.map3_score >= 5:
+		PlayerConditionals.map3_finished = true
 
 func open_mission(num: int) -> void:
 	match num:
@@ -47,3 +60,21 @@ func open_mission(num: int) -> void:
 			mis_4.visible = true
 		5:
 			mis_5.visible = true
+
+func start_skillcheck(tb_id: int) -> void:
+	trash_body_skillcheck.current_id = tb_id
+	trash_body_skillcheck.start_skillcheck
+	
+	trash_body_skillcheck.visible = true
+	quest_banner.visible = false
+	minimap_ui.visible = false
+	
+	trash_body_skillcheck.finished_cleaning.connect(remove_trashbag)
+
+func remove_trashbag(tb_id: int) -> void:
+	trash_body_skillcheck.visible = false
+	quest_banner.visible = true
+	minimap_ui.visible = true
+	for i in get_tree().get_nodes_in_group("trashbody"):
+		if i.current_id == tb_id:
+			i.done_tb()
